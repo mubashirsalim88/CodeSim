@@ -1,2 +1,31 @@
-.venv
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Virtual Envs
+.venv/
+env/
+venv/
+
+# Logs and databases
+*.log
+*.db
+
+# IDEs
+.vscode/
+.idea/
+
+# Jupyter & IPython
+.ipynb_checkpoints/
+*.ipynb
+
+# Secrets
 .env
+
+# Mac
+.DS_Store
