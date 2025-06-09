@@ -1,21 +1,21 @@
 {% extends 'base.html' %}
 {% block title %}Reports - CodeCompare{% endblock %}
 {% block content %}
-    <section class="py-16 bg-gray-900">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold mb-8 text-center text-indigo-400">Past Reports</h2>
-            <div class="bg-gray-800 p-6 rounded-xl shadow-lg">
+    <section class="py-20 bg-gradient-to-br from-gray-900 to-gray-800">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-extrabold mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-500">Past Reports</h2>
+            <div class="bg-gray-800/80 backdrop-blur-md p-8 rounded-2xl shadow-2xl">
                 {% if reports %}
-                    <ul class="space-y-3">
+                    <ul class="space-y-4">
                         {% for report in reports %}
-                            <li class="flex justify-between items-center p-3 bg-gray-700 rounded-lg hover:bg-gray-600 transition">
-                                <span>{{ report.filename }}</span>
-                                <a href="{{ url_for('download_report', filename=report.filename) }}" class="text-indigo-400 hover:underline">Download</a>
+                            <li class="flex justify-between items-center p-4 bg-gray-700/50 rounded-lg hover:bg-gray-600/50 transition duration-200">
+                                <span class="text-gray-300">{{ report.filename }}</span>
+                                <a href="{{ url_for('download_report', filename=report.filename) }}" class="text-indigo-400 hover:text-indigo-300 hover:underline transition duration-200" aria-label="Download report {{ report.filename }}">Download</a>
                             </li>
                         {% endfor %}
                     </ul>
                 {% else %}
-                    <p class="text-gray-400">No reports available.</p>
+                    <p class="text-gray-400 text-center py-8">No reports available.</p>
                 {% endif %}
             </div>
         </div>

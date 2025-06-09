@@ -4,33 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}CodeCompare{% endblock %}</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <script src="{{ url_for('static', filename='js/tailwind.js') }}"></script>
+    <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-dark.min.css" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%239f7aea'><path d='M4 4h12v12H4V4zm2 2v8h8V6H6zm2 2h4v4H8V8z'/></svg>">
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js" defer></script>
     <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
 </head>
-<body class="bg-gray-900 text-white font-sans min-h-screen">
-    <nav class="bg-gray-800 p-4 shadow-lg">
+<body class="bg-gradient-to-br from-gray-900 to-gray-800 text-white font-sans min-h-screen">
+    <nav class="bg-gray-950/80 backdrop-blur-md p-4 shadow-xl sticky top-0 z-50">
         <div class="container mx-auto flex justify-between items-center">
-            <a href="{{ url_for('index') }}" class="text-2xl font-bold text-indigo-400 hover:text-indigo-300">CodeCompare</a>
-            <div class="space-x-4">
-                <a href="{{ url_for('index') }}#features" class="hover:text-indigo-300 transition">Features</a>
-                <a href="{{ url_for('index') }}#how-it-works" class="hover:text-indigo-300 transition">How It Works</a>
-                <a href="#pricing" class="hover:text-indigo-300 transition">Pricing</a>
+            <a href="{{ url_for('index') }}" class="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-500 hover:from-indigo-300 hover:to-purple-400 transition">CodeCompare</a>
+            <div class="space-x-6">
+                <a href="{{ url_for('index') }}#features" class="text-gray-300 hover:text-indigo-300 transition duration-300">Features</a>
+                <a href="{{ url_for('index') }}#how-it-works" class="text-gray-300 hover:text-indigo-300 transition duration-300">How It Works</a>
+                <a href="#pricing" class="text-gray-300 hover:text-indigo-300 transition duration-300">Pricing</a>
                 {% if session.user_id %}
-                    <a href="{{ url_for('dashboard') }}" class="hover:text-indigo-300 transition">Dashboard</a>
-                    <a href="{{ url_for('logout') }}" class="hover:text-indigo-300 transition">Logout</a>
+                    <a href="{{ url_for('dashboard') }}" class="text-gray-300 hover:text-indigo-300 transition duration-300">Dashboard</a>
+                    <a href="{{ url_for('logout') }}" class="text-gray-300 hover:text-indigo-300 transition duration-300">Logout</a>
                 {% else %}
-                    <a href="{{ url_for('login') }}" class="hover:text-indigo-300 transition">Login</a>
-                    <a href="{{ url_for('signup') }}" class="hover:text-indigo-300 transition">Sign Up</a>
+                    <a href="{{ url_for('login') }}" class="text-gray-300 hover:text-indigo-300 transition duration-300">Login</a>
+                    <a href="{{ url_for('signup') }}" class="bg-indigo-500 text-white px-4 py-2 rounded-full hover:bg-indigo-600 transition duration-300">Sign Up</a>
                 {% endif %}
             </div>
         </div>
     </nav>
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
-            <div class="container mx-auto mt-4">
+            <div class="container mx-auto mt-6 space-y-4">
                 {% for category, message in messages %}
-                    <div class="p-4 mb-4 rounded-lg {% if category == 'success' %}bg-green-600{% elif category == 'error' %}bg-red-600{% else %}bg-blue-600{% endif %}">
+                    <div class="p-4 rounded-lg animate-slide-in {% if category == 'success' %}bg-green-700/80{% elif category == 'error' %}bg-red-700/80{% else %}bg-blue-700/80{% endif %}" role="alert">
                         {{ message }}
                     </div>
                 {% endfor %}
@@ -38,8 +40,8 @@
         {% endif %}
     {% endwith %}
     {% block content %}{% endblock %}
-    <footer class="bg-gray-800 p-4 mt-8 text-center">
-        <p>© 2025 CodeCompare. All rights reserved.</p>
+    <footer class="bg-gray-950/80 backdrop-blur-md p-6 mt-12 text-center">
+        <p class="text-gray-400">© 2025 CodeCompare. All rights reserved.</p>
     </footer>
 </body>
 </html>

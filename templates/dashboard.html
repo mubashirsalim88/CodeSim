@@ -1,17 +1,17 @@
 {% extends 'base.html' %}
 {% block title %}Dashboard - CodeCompare{% endblock %}
 {% block content %}
-    <section class="py-16 bg-gray-900">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold mb-8 text-center text-indigo-400">Code Analysis Dashboard</h2>
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <section class="py-20 bg-gradient-to-br from-gray-900 to-gray-800">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-extrabold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-500">Code Analysis Dashboard</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <!-- File Upload Card -->
-                <div class="lg:col-span-1 bg-gray-800 p-6 rounded-xl shadow-lg transform hover:scale-105 transition">
-                    <h3 class="text-xl font-semibold mb-4 text-indigo-300">Upload Files</h3>
-                    <form method="POST" enctype="multipart/form-data" id="upload-form">
-                        <div class="mb-4">
-                            <label for="file_type" class="block text-sm font-medium text-gray-300">File Type</label>
-                            <select id="file_type" name="file_type" class="w-full p-3 mt-1 rounded-lg bg-gray-700 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                <div class="lg:col-span-1 bg-gray-800/80 backdrop-blur-md p-8 rounded-2xl shadow-2xl transform hover:scale-105 transition duration-300">
+                    <h3 class="text-2xl font-semibold mb-6 text-indigo-300">Upload Files</h3>
+                    <form method="POST" enctype="multipart/form-data" id="upload-form" class="space-y-6">
+                        <div>
+                            <label for="file_type" class="block text-sm font-medium text-gray-300 mb-2">File Type</label>
+                            <select id="file_type" name="file_type" class="w-full p-3 rounded-lg bg-gray-700/50 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition" aria-label="Select file type">
                                 <option value="py">Python (.py)</option>
                                 <option value="java">Java (.java)</option>
                                 <option value="cpp">C++ (.cpp)</option>
@@ -20,36 +20,36 @@
                                 <option value="php">PHP (.php)</option>
                             </select>
                         </div>
-                        <div class="mb-4">
-                            <input type="file" id="files" name="files" multiple accept=".py,.java,.cpp,.c,.js,.php" class="w-full p-3 rounded-lg bg-gray-700 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                        <div>
+                            <input type="file" id="files" name="files" multiple accept=".py,.java,.cpp,.c,.js,.php" class="w-full p-3 rounded-lg bg-gray-700/50 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition" aria-label="Upload code files">
                         </div>
-                        <button type="submit" id="analyze-btn" class="w-full bg-indigo-500 text-white p-3 rounded-lg hover:bg-indigo-600 transition disabled:bg-gray-500" disabled>Analyze Similarity</button>
+                        <button type="submit" id="analyze-btn" class="w-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white p-3 rounded-lg hover:from-indigo-600 hover:to-purple-600 transition disabled:bg-gray-500 disabled:cursor-not-allowed" disabled>Analyze Similarity</button>
                     </form>
-                    <ul id="file-list" class="mt-4 space-y-2"></ul>
+                    <ul id="file-list" class="mt-6 space-y-3"></ul>
                 </div>
                 <!-- Results Card -->
-                <div class="lg:col-span-2 bg-gray-800 p-6 rounded-xl shadow-lg">
-                    <h3 class="text-xl font-semibold mb-4 text-indigo-300">Analysis Results</h3>
+                <div class="lg:col-span-2 bg-gray-800/80 backdrop-blur-md p-8 rounded-2xl shadow-2xl">
+                    <h3 class="text-2xl font-semibold mb-6 text-indigo-300">Analysis Results</h3>
                     {% if results %}
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-sm bg-gray-700 rounded-lg">
+                        <div class="overflow-x-auto rounded-lg">
+                            <table class="w-full text-sm bg-gray-700/50 rounded-lg">
                                 <thead>
-                                    <tr class="bg-indigo-600 text-white">
-                                        <th class="p-3">File 1</th>
-                                        <th class="p-3">File 2</th>
-                                        <th class="p-3">Similarity Score</th>
-                                        <th class="p-3">Details</th>
+                                    <tr class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white">
+                                        <th class="p-4 text-left">File 1</th>
+                                        <th class="p-4 text-left">File 2</th>
+                                        <th class="p-4 text-left">Similarity Score</th>
+                                        <th class="p-4 text-left">Details</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {% for result in results %}
-                                        <tr class="border-t border-gray-600 hover:bg-gray-600 transition">
-                                            <td class="p-3">{{ result.file1 }}</td>
-                                            <td class="p-3">{{ result.file2 }}</td>
-                                            <td class="p-3">{{ "%.2f%%" % (result.score * 100) }}</td>
-                                            <td class="p-3">
+                                        <tr class="border-t border-gray-600 hover:bg-gray-600/50 transition duration-200">
+                                            <td class="p-4">{{ result.file1 }}</td>
+                                            <td class="p-4">{{ result.file2 }}</td>
+                                            <td class="p-4">{{ "%.2f%%" % (result.score * 100) }}</td>
+                                            <td class="p-4">
                                                 {% if result.highlight %}
-                                                    <button onclick="showCode('{{ result.highlight.code1 | e }}', '{{ result.highlight.code2 | e }}')" class="text-indigo-400 hover:underline">View Code</button>
+                                                    <button onclick="showCode('{{ result.highlight.code1 | e }}', '{{ result.highlight.code2 | e }}', '{{ result.file1 }}', '{{ result.file2 }}')" class="text-indigo-400 hover:text-indigo-300 transition duration-200" aria-label="View code comparison">View Code</button>
                                                 {% endif %}
                                             </td>
                                         </tr>
@@ -58,46 +58,46 @@
                             </table>
                         </div>
                         {% if latest_report %}
-                            <a href="{{ url_for('download_report', filename=latest_report[0]) }}" class="mt-4 inline-block bg-indigo-500 text-white p-3 rounded-lg hover:bg-indigo-600 transition">Download Full Report</a>
+                            <a href="{{ url_for('download_report', filename=latest_report[0]) }}" class="mt-6 inline-block bg-gradient-to-r from-indigo-500 to-purple-500 text-white p-3 rounded-lg hover:from-indigo-600 hover:to-purple-600 transition">Download Full Report</a>
                         {% endif %}
                     {% else %}
-                        <p class="text-gray-400">Upload at least two files to start analysis.</p>
+                        <p class="text-gray-400 text-center py-8">Upload at least two files to start analysis.</p>
                     {% endif %}
                 </div>
             </div>
             <!-- Recent Reports Card -->
-            <div class="mt-8 bg-gray-800 p-6 rounded-xl shadow-lg">
-                <h3 class="text-xl font-semibold mb-4 text-indigo-300">Recent Reports</h3>
+            <div class="mt-12 bg-gray-800/80 backdrop-blur-md p-8 rounded-2xl shadow-2xl">
+                <h3 class="text-2xl font-semibold mb-6 text-indigo-300">Recent Reports</h3>
                 {% if reports %}
-                    <ul class="space-y-3">
+                    <ul class="space-y-4">
                         {% for report in reports %}
-                            <li class="flex justify-between items-center p-3 bg-gray-700 rounded-lg hover:bg-gray-600 transition">
-                                <span>{{ report[0] }}</span>
-                                <a href="{{ url_for('download_report', filename=report[0]) }}" class="text-indigo-400 hover:underline">Download</a>
+                            <li class="flex justify-between items-center p-4 bg-gray-700/50 rounded-lg hover:bg-gray-600/50 transition duration-200">
+                                <span class="text-gray-300">{{ report[0] }}</span>
+                                <a href="{{ url_for('download_report', filename=report[0]) }}" class="text-indigo-400 hover:text-indigo-300 transition duration-200" aria-label="Download report {{ report[0] }}">Download</a>
                             </li>
                         {% endfor %}
                     </ul>
                 {% else %}
-                    <p class="text-gray-400">No past reports available.</p>
+                    <p class="text-gray-400 text-center py-8">No past reports available.</p>
                 {% endif %}
             </div>
         </div>
     </section>
     <!-- Code Modal -->
-    <div id="code-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
-        <div class="bg-gray-800 p-6 rounded-xl max-w-5xl w-full max-h-[80vh] overflow-auto">
-            <div class="flex justify-between mb-4">
-                <h3 class="text-xl font-semibold text-indigo-300">Code Comparison</h3>
-                <button onclick="closeModal()" class="text-indigo-400 hover:text-indigo-300 transition">Close</button>
+    <div id="code-modal" class="fixed inset-0 bg-black bg-opacity-70 hidden z-50 transition-opacity duration-300" role="dialog" aria-labelledby="code-modal-title">
+        <div class="bg-gray-800/90 backdrop-blur-md p-8 rounded-2xl max-w-6xl w-full max-h-[85vh] overflow-auto shadow-2xl flex flex-col">
+            <div class="flex justify-between items-center mb-6">
+                <h3 id="code-modal-title" class="text-2xl font-semibold text-indigo-300">Code Comparison</h3>
+                <button onclick="closeModal()" class="text-indigo-400 hover:text-indigo-300 transition duration-200" aria-label="Close modal">Close</button>
             </div>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div>
-                    <h4 class="font-semibold mb-2 text-gray-300">File 1</h4>
-                    <pre class="bg-gray-700 p-4 rounded-lg text-sm"><code id="code1"></code></pre>
+                    <h4 id="file1-title" class="font-semibold mb-3 text-gray-300"></h4>
+                    <pre class="bg-gray-900 p-4 rounded-lg text-sm overflow-x-auto"><code id="code1" class="language-python"></code></pre>
                 </div>
                 <div>
-                    <h4 class="font-semibold mb-2 text-gray-300">File 2</h4>
-                    <pre class="bg-gray-700 p-4 rounded-lg text-sm"><code id="code2"></code></pre>
+                    <h4 id="file2-title" class="font-semibold mb-3 text-gray-300"></h4>
+                    <pre class="bg-gray-900 p-4 rounded-lg text-sm overflow-x-auto"><code id="code2" class="language-python"></code></pre>
                 </div>
             </div>
         </div>
