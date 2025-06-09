@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard - CodeCompare{% endblock %}
+{% block content %}
+    <section class="py-16 bg-gray-900">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-8 text-center text-indigo-400">Code Analysis Dashboard</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- File Upload Card -->
+                <div class="lg:col-span-1 bg-gray-800 p-6 rounded-xl shadow-lg transform hover:scale-105 transition">
+                    <h3 class="text-xl font-semibold mb-4 text-indigo-300">Upload Files</h3>
+                    <form method="POST" enctype="multipart/form-data" id="upload-form">
+                        <div class="mb-4">
+                            <label for="file_type" class="block text-sm font-medium text-gray-300">File Type</label>
+                            <select id="file_type" name="file_type" class="w-full p-3 mt-1 rounded-lg bg-gray-700 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                                <option value="py">Python (.py)</option>
+                                <option value="java">Java (.java)</option>
+                                <option value="cpp">C++ (.cpp)</option>
+                                <option value="c">C (.c)</option>
+                                <option value="js">JavaScript (.js)</option>
+                                <option value="php">PHP (.php)</option>
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <input type="file" id="files" name="files" multiple accept=".py,.java,.cpp,.c,.js,.php" class="w-full p-3 rounded-lg bg-gray-700 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                        </div>
+                        <button type="submit" id="analyze-btn" class="w-full bg-indigo-500 text-white p-3 rounded-lg hover:bg-indigo-600 transition disabled:bg-gray-500" disabled>Analyze Similarity</button>
+                    </form>
+                    <ul id="file-list" class="mt-4 space-y-2"></ul>
+                </div>
+                <!-- Results Card -->
+                <div class="lg:col-span-2 bg-gray-800 p-6 rounded-xl shadow-lg">
+                    <h3 class="text-xl font-semibold mb-4 text-indigo-300">Analysis Results</h3>
+                    {% if results %}
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm bg-gray-700 rounded-lg">
+                                <thead>
+                                    <tr class="bg-indigo-600 text-white">
+                                        <th class="p-3">File 1</th>
+                                        <th class="p-3">File 2</th>
+                                        <th class="p-3">Similarity Score</th>
+                                        <th class="p-3">Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for result in results %}
+                                        <tr class="border-t border-gray-600 hover:bg-gray-600 transition">
+                                            <td class="p-3">{{ result.file1 }}</td>
+                                            <td class="p-3">{{ result.file2 }}</td>
+                                            <td class="p-3">{{ "%.2f%%" % (result.score * 100) }}</td>
+                                            <td class="p-3">
+                                                {% if result.highlight %}
+                                                    <button onclick="showCode('{{ result.highlight.code1 | e }}', '{{ result.highlight.code2 | e }}')" class="text-indigo-400 hover:underline">View Code</button>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {% if latest_report %}
+                            <a href="{{ url_for('download_report', filename=latest_report[0]) }}" class="mt-4 inline-block bg-indigo-500 text-white p-3 rounded-lg hover:bg-indigo-600 transition">Download Full Report</a>
+                        {% endif %}
+                    {% else %}
+                        <p class="text-gray-400">Upload at least two files to start analysis.</p>
+                    {% endif %}
+                </div>
+            </div>
+            <!-- Recent Reports Card -->
+            <div class="mt-8 bg-gray-800 p-6 rounded-xl shadow-lg">
+                <h3 class="text-xl font-semibold mb-4 text-indigo-300">Recent Reports</h3>
+                {% if reports %}
+                    <ul class="space-y-3">
+                        {% for report in reports %}
+                            <li class="flex justify-between items-center p-3 bg-gray-700 rounded-lg hover:bg-gray-600 transition">
+                                <span>{{ report[0] }}</span>
+                                <a href="{{ url_for('download_report', filename=report[0]) }}" class="text-indigo-400 hover:underline">Download</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="text-gray-400">No past reports available.</p>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+    <!-- Code Modal -->
+    <div id="code-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+        <div class="bg-gray-800 p-6 rounded-xl max-w-5xl w-full max-h-[80vh] overflow-auto">
+            <div class="flex justify-between mb-4">
+                <h3 class="text-xl font-semibold text-indigo-300">Code Comparison</h3>
+                <button onclick="closeModal()" class="text-indigo-400 hover:text-indigo-300 transition">Close</button>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div>
+                    <h4 class="font-semibold mb-2 text-gray-300">File 1</h4>
+                    <pre class="bg-gray-700 p-4 rounded-lg text-sm"><code id="code1"></code></pre>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-2 text-gray-300">File 2</h4>
+                    <pre class="bg-gray-700 p-4 rounded-lg text-sm"><code id="code2"></code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

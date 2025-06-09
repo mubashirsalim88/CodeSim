@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% block title %}CodeCompare - Home{% endblock %}
+{% block content %}
+    <!-- Hero Section -->
+    <section class="bg-gray-900 py-20">
+        <div class="container mx-auto text-center px-4">
+            <h1 class="text-5xl font-bold mb-4 text-indigo-400">Compare Code, Find Similarities</h1>
+            <p class="text-xl mb-8 text-gray-300">Detect code similarities across multiple files with advanced algorithms.</p>
+            <div class="space-x-4">
+                <a href="{{ url_for('dashboard') }}" class="bg-indigo-500 text-white px-6 py-3 rounded-full hover:bg-indigo-600 transition">Start Comparing</a>
+                <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" class="border border-indigo-400 text-indigo-400 px-6 py-3 rounded-full hover:bg-indigo-400 hover:text-white transition">Watch Demo</a>
+            </div>
+            <div class="mt-12 bg-gray-800 p-6 rounded-xl shadow-lg max-w-2xl mx-auto">
+                <pre class="text-left text-sm text-gray-300"><code>
+# Example Comparison
+def is_prime(n):
+    return [x for x in range(2, n+1) if all(x % i != 0 for i in range(2, int(x**0.5) + 1))]
+                </code></pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-16 bg-gray-900">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12 text-indigo-400">Features</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-gray-800 p-6 rounded-xl shadow-lg transform hover:scale-105 transition">
+                    <svg class="w-12 h-12 mb-4 text-indigo-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M4 4h12v12H4V4zm2 2v8h8V6H6zm2 2h4v4H8V8z"/>
+                    </svg>
+                    <h3 class="text-xl font-semibold mb-2 text-indigo-300">Multiple File Support</h3>
+                    <p class="text-gray-300">Upload and compare multiple code files in various languages.</p>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-xl shadow-lg transform hover:scale-105 transition">
+                    <svg class="w-12 h-12 mb-4 text-indigo-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10 2l-8 8h6v8h4v-8h6l-8-8z"/>
+                    </svg>
+                    <h3 class="text-xl font-semibold mb-2 text-indigo-300">Lightning Fast</h3>
+                    <p class="text-gray-300">Quick analysis with advanced GraphCodeBERT algorithms.</p>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-xl shadow-lg transform hover:scale-105 transition">
+                    <svg class="w-12 h-12 mb-4 text-indigo-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M3 3h14v14H3V3zm2 2v10h10V5H5zm2 2h6v6H7V7z"/>
+                    </svg>
+                    <h3 class="text-xl font-semibold mb-2 text-indigo-300">Detailed Analytics</h3>
+                    <p class="text-gray-300">Comprehensive similarity reports with highlighted code blocks.</p>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-xl shadow-lg transform hover:scale-105 transition">
+                    <svg class="w-12 h-12 mb-4 text-indigo-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M5 3h10v14H5V3zm2 2v10h6V5H7zm4 4h2v2h-2V9z"/>
+                    </svg>
+                    <h3 class="text-xl font-semibold mb-2 text-indigo-300">Secure & Private</h3>
+                    <p class="text-gray-300">Your code and data are securely handled and stored.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-16 bg-gray-800">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12 text-indigo-400">How It Works</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="text-center bg-gray-700 p-6 rounded-xl shadow-lg transform hover:scale-105 transition">
+                    <svg class="w-12 h-12 mx-auto mb-4 text-indigo-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M6 4v12h8V4H6zm2 2h4v8H8V6z"/>
+                    </svg>
+                    <h3 class="text-xl font-semibold mb-2 text-indigo-300">Step 1: Upload Files</h3>
+                    <p class="text-gray-300">Drag and drop your code files to start the analysis.</p>
+                </div>
+                <div class="text-center bg-gray-700 p-6 rounded-xl shadow-lg transform hover:scale-105 transition">
+                    <svg class="w-12 h-12 mx-auto mb-4 text-indigo-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10 2l-8 8h6v8h4v-8h6l-8-8z"/>
+                    </svg>
+                    <h3 class="text-xl font-semibold mb-2 text-indigo-300">Step 2: Analyze Similarities</h3>
+                    <p class="text-gray-300">Our algorithms process and compare your code.</p>
+                </div>
+                <div class="text-center bg-gray-700 p-6 rounded-xl shadow-lg transform hover:scale-105 transition">
+                    <svg class="w-12 h-12 mx-auto mb-4 text-indigo-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M3 3h14v14H3V3zm2 2v10h10V5H5zm2 2h6v6H7V7z"/>
+                    </svg>
+                    <h3 class="text-xl font-semibold mb-2 text-indigo-300">Step 3: Get Results</h3>
+                    <p class="text-gray-300">View detailed reports and download as PDF.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

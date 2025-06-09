@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}CodeCompare{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+</head>
+<body class="bg-gray-900 text-white font-sans min-h-screen">
+    <nav class="bg-gray-800 p-4 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="{{ url_for('index') }}" class="text-2xl font-bold text-indigo-400 hover:text-indigo-300">CodeCompare</a>
+            <div class="space-x-4">
+                <a href="{{ url_for('index') }}#features" class="hover:text-indigo-300 transition">Features</a>
+                <a href="{{ url_for('index') }}#how-it-works" class="hover:text-indigo-300 transition">How It Works</a>
+                <a href="#pricing" class="hover:text-indigo-300 transition">Pricing</a>
+                {% if session.user_id %}
+                    <a href="{{ url_for('dashboard') }}" class="hover:text-indigo-300 transition">Dashboard</a>
+                    <a href="{{ url_for('logout') }}" class="hover:text-indigo-300 transition">Logout</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="hover:text-indigo-300 transition">Login</a>
+                    <a href="{{ url_for('signup') }}" class="hover:text-indigo-300 transition">Sign Up</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="container mx-auto mt-4">
+                {% for category, message in messages %}
+                    <div class="p-4 mb-4 rounded-lg {% if category == 'success' %}bg-green-600{% elif category == 'error' %}bg-red-600{% else %}bg-blue-600{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+    <footer class="bg-gray-800 p-4 mt-8 text-center">
+        <p>© 2025 CodeCompare. All rights reserved.</p>
+    </footer>
+</body>
+</html>
